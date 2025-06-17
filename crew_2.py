@@ -5,15 +5,12 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from crewai import Agent, Task, Crew, LLM
 
-# -- Config --
-#PDF_DIR = "/path/to/your/pdfs"
-#OPENAI_API_KEY = os.getenv("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")
 
 LLM_MODEL = "gpt-3.5-turbo"
-DB_DIR = "/media/reinaldo/6e1becc7-57b2-4288-97e6-a0888792427b/home/reinaldo/7a310714-2a6d-44bd-bd76-c6a65540eb82/Data Science/Maestria/2do_anio/TBD/MVP_regulatorio//chroma_db"
+DB_DIR = ""
 
 
-OPENAI_API_KEY="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"
+OPENAI_API_KEY=""
 MISTRAL_API_KEY="YOUR_MISTRAL_KEY"
 LLM_PROVIDER="openai"  # or "mist
 # -- LLM --
@@ -156,58 +153,6 @@ await main()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-
-
-
-
-
-import io
-import sys
-
-# Capture stdout
-buffer = io.StringIO()
-sys.stdout = buffer
-
-# Run the crew
-result = current_crew.kickoff()
-
-# Reset stdout
-sys.stdout = sys.__stdout__
-
-# Get the logs
-logs = buffer.getvalue()
-print(result)
-
-# Example call:
-# run_crew("Can foreign exchange operations be conducted without a registered intermediary?")
-# ask_question("What are the limitations on capital outflows under current Argentine FX regulations?")
-
-
-import glob
-import os
-"""
-
-folder_path = "/media/reinaldo/6e1becc7-57b2-4288-97e6-a0888792427b/home/reinaldo/7a310714-2a6d-44bd-bd76-c6a65540eb82/Data Science/Maestria/2do_anio/TBD/MVP_regulatorio/normas/"
-pdf_files = glob.glob(os.path.join(folder_path, "*.pdf"))
-topic='Cuales son las condiciones para el acceso a divisa extrangera en el contexto de liquidacion de granos'
-pdf_paths=None
-run_crew(topic, pdf_paths=None)
-question= topic
 
 
 
