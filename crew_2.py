@@ -77,7 +77,7 @@ def build_tasks(topic, retriever):
         ),
         Task(
             description="Write a structured compliance report based on the analyst’s findings. The report must include an executive summary, regulatory breakdown, and practical implications for the bank.¸\
-                . Trim out tags related to: MBA Systems - Normas Financieras-Lavalle 579 9° -C1047AAK Buenos Aires-Argentina - Tel: +54 11 3990-9500 www.normasfinancieras.com",
+                
             expected_output="A full markdown-formatted compliance report" ,
             agent=writer
         ),
@@ -116,39 +116,6 @@ def ask_question(question):
 
 
 
-ds()
-inputs = []
-outputs = []
-import nest_asyncio
-import asyncio
-from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
-
-# Patch the event loop for Spyder
-nest_asyncio.apply()
-
-# Example response function
-#def ask_question(question):
-    #return f"🤖 You asked: {question}"
-    #return result.raw
-
-# Handler for incoming messages
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_message = update.message.text
-    inputs.append(user_message)
-    response = ask_question(user_message)
-    outputs.append(response)
-    await update.message.reply_text(response)
-
-# Bot setup and run
-async def main():
-    
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    print("Bot is running...")
-    await app.run_polling()
-
-# Run in Spyder
-await main()
 
 
 
