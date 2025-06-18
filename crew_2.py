@@ -142,7 +142,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Bot setup and run
 async def main():
-    app = ApplicationBuilder().token("7997571804:AAFijcPBviSxJx2xyFFfx_UuXw-fy3pB89U").build()
+    
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("Bot is running...")
     await app.run_polling()
