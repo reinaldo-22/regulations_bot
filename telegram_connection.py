@@ -144,7 +144,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ====== MAIN RUNNER ======
 async def main():
     # Put your bot token here
-    app = ApplicationBuilder().token("7997571804:AAFijcPBviSxJx2xyFFfx_UuXw-fy3pB89U").build()
+    app = ApplicationBuilder().token("").build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     print("Bot is running...")
     await app.run_polling()
@@ -159,7 +159,7 @@ ds()
 
 import sqlite3
 
-DB_PATH = "/home/reinaldo/Downloads/chatlog.db"
+DB_PATH = "chatlog.db"
 
 def load_users_dict():
     conn = sqlite3.connect(DB_PATH)
@@ -223,14 +223,3 @@ for user_id, qas in logs_by_user.items():
         print(f"  [{qa['timestamp']}] Q: {qa['question']}\n     A: {qa['answer']}\n")
 
 
-user_id_to_delete = 1311666134
-
-def delete_user(user_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
-    conn.commit()
-    conn.close()
-    print(f"User {user_id} deleted.")
-
-delete_user(user_id_to_delete)
