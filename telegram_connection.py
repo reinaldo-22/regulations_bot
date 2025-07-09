@@ -134,7 +134,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         print("Exception in reply_text:", e)
         traceback.print_exc()  # <---- Esto imprime el stack trace real en consola
         # Fallback to PDF...
-        pdf_file_path = "/home/reinaldo/Downloads/outputllm.pdf"
+        pdf_file_path = ".pdf"
         make_pretty_pdf(response, filename=pdf_file_path, font_size=12)
         with open(pdf_file_path, "rb") as pdf_file:
             await update.message.reply_document(pdf_file)
