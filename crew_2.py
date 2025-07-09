@@ -6,7 +6,7 @@ from langchain.vectorstores import Chroma
 from crewai import Agent, Task, Crew, LLM
 
 
-LLM_MODEL = "gpt-3.5-turbo"
+LLM_MODEL = ""
 DB_DIR = ""
 
 
