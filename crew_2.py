@@ -110,7 +110,49 @@ def ask_question(question):
     #current_crew = Crew(agents=[ag], tasks=[t], verbose=True)
     return result.raw
     
-
+def run_final_answer_agent(question, all_resumes_and_terms, all_rags, llm):
+    agent = Agent(
+        role="Jefe de Cumplimiento Regulatorio BCRA",
+        goal="Responder preguntas regulatorias para un banco argentino, usando los resúmenes y documentos extraídos.",
+        backstory=(
+            "Eres el responsable de compliance en un banco del Río de la Plata. "
+            "Tu conocimiento del BCRA es impecable y redactas informes en español profesional."
+        ),
+        llm=llm
+    )
+    context = "Resúmenes y términos clave por documento:\n"
+    for item in all_resumes_and_terms:
+        context += f"Documento: {item['file_path']}\nResumen: {item['resume_relevant_to_question']}\nTérminos: {', '.join(item['terms_to_rags'])}\n\n"
+    context += "\nFragmentos relevantes encontrados:\n"
+    for rag in all_rags:
+        context += f"- {rag.page_content}\n"
+    task = Task(
+        description=(
+            f"{context}\n\nPregunta del equipo:\n{question}\n"
+            "Redacta una respuesta detallada, citando resúmenes y fragmentos donde corresponda. Cita con detalle las regulaciones mencionadas y su vinculacion."
+            "Responde en español del Río de la Plata y con enfoque en cumplimiento BCRA."
+        ),
+        expected_output="Respuesta argumentada y profesional en español.",
+        agent=agent
+    )
+    result = Crew(agents=[agent], tasks=[task], verbose=False, memory=False).kickoff()
+    return result.raw
+    
+def ask_question(question, pdf_paths,model_name,max_tokens):
+    retriever = get_retriever(True, None, 2)
+    # Get rags
+    rags = retriever.get_relevant_documents(question)
+    rag_metadata = [rag.metadata for rag in rags]
+    # Extract unique sources
+    full_documents = get_full_docs_from_rags(rags)
+    model_name= "gpt-3.5-turbo"
+    max_tokens=128000
+    chunked_documents = chunk_full_documents(full_documents, max_tokens, model_name)
+       
+    all_terms = [term for item in all_resumes_and_terms for term in item["terms_to_rags"]]
+    all_rags = get_all_rags_from_terms(all_terms, retriever)
+    answer = run_final_answer_agent(question, all_resumes_and_terms, all_rags, llm)
+    return answer
 
 
 
